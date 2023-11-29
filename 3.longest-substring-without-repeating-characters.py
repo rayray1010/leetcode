@@ -22,3 +22,11 @@ class Solution:
 
 
 # @lc code=end
+
+
+def test():
+    a = Solution()
+    assert a.lengthOfLongestSubstring("pwwkew") == 3
+
+
+test()
