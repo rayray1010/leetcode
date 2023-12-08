@@ -1,3 +1,8 @@
+# @before-stub-for-debug-begin
+from python3problem23 import *
+from typing import *
+# @before-stub-for-debug-end
+
 from typing import Optional, List
 import heapq
 #
@@ -17,22 +22,21 @@ class ListNode:
 
 class Solution:
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-        heap = []
+        if not lists:
+            return None
+
         dummy = ListNode(None)
-        current = dummy
-        for i in range(len(lists)):
-            if lists[i]:
-                heapq.heappush(heap, (lists[i].val, i))
-                lists[i] = lists[i].next
+        dummy_pointer = dummy
 
-        while heap:
-            val, index = heapq.heappop(heap)
-            current.next = ListNode(val)
-            current = current.next
+        pq = []
+        for i in lists:
+            while i:
+                heapq.heappush(pq, (i.val))
+                i = i.next
 
-            if lists[index]:
-                heapq.heappush(heap, (lists[index].val, index))
-                lists[index] = lists[index].next
+        while pq:
+            dummy_pointer.next = ListNode(heapq.heappop(pq))
+            dummy_pointer = dummy_pointer.next
 
         return dummy.next
 

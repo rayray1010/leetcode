@@ -15,21 +15,26 @@ class ListNode:
 
 
 class Solution:
+    def __init__(self):
+        self.sessor = None
+
     def reverseBetween(
         self, head: Optional[ListNode], left: int, right: int
     ) -> Optional[ListNode]:
-        if not head or left == right:
-            return head
+        if left == 1:
+            return self.reverseN(head, right)
 
-        dummy = ListNode(None, head)
-        prev = dummy
-        for _ in range(left - 1):
-            prev = prev.next
-        current = prev.next
-        for _ in range(right - left):
-            next = current.next
-            current.next, next.next, prev.next = next.next, prev.next, next
-        return dummy.next
+        head.next = self.reverseBetween(head.next, left - 1, right - 1)
+        return head
+
+    def reverseN(self, head, n):
+        if n == 1:
+            self.sessor = head.next
+            return head
+        last = self.reverseN(head.next, n - 1)
+        head.next.next = head
+        head.next = self.sessor
+        return last
 
 
 # @lc code=end
